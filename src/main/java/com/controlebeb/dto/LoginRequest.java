@@ -1,4 +1,4 @@
-package com.controlebeb.controlebeb1.dto;
+package com.controlebeb.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;

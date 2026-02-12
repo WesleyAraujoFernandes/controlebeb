@@ -1,4 +1,4 @@
-package com.controlebeb.controlebeb1.domain;
+package com.controlebeb.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

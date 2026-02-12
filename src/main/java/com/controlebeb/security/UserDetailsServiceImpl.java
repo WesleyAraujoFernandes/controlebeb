@@ -1,10 +1,10 @@
-package com.controlebeb2.controlebeb1.security;
+package com.controlebeb.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
-import com.controlebeb2.controlebeb1.repository.UsuarioRepository;
+import com.controlebeb.repository.UsuarioRepository;
 
 @Service
 @RequiredArgsConstructor

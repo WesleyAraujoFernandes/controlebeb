@@ -1,11 +1,11 @@
-package com.controlebeb.controlebeb1.security;
+package com.controlebeb.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.controlebeb.controlebeb1.domain.Usuario;
+import com.controlebeb.domain.Usuario;
 
 import java.util.Collection;
 import java.util.List;
