@@ -1,4 +1,4 @@
-package com.controlebeb.controlebeb.domain;
+package com.controlebeb.controlebeb1.domain;
 
 import java.time.LocalDateTime;
 
