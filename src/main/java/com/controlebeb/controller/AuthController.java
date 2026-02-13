@@ -31,32 +31,16 @@ public class AuthController {
         return authService.login(request);
     }
 
-    /*
-     * @PostMapping("/refresh")
-     * public LoginResponse refresh(@RequestBody String refreshToken) {
-     * 
-     * RefreshToken token = refreshTokenService.validateRefreshToken(refreshToken);
-     * 
-     * Usuario usuario = token.getUsuario();
-     * 
-     * UserDetailsImpl userDetails = new UserDetailsImpl(usuario);
-     * 
-     * String newAccessToken = jwtService.generateAccessToken(userDetails);
-     * String newRefreshToken = jwtService.generateRefreshToken(userDetails);
-     * 
-     * refreshTokenService.deleteByUser(usuario);
-     * 
-     * refreshTokenService.createRefreshToken(
-     * usuario,
-     * newRefreshToken,
-     * refreshExpiration);
-     * 
-     * return new LoginResponse(newAccessToken, newRefreshToken);
-     * }
-     */
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(@RequestBody LogoutRequest request) {
+
+        authService.logout(request.getRefreshToken());
+
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/refresh")
-    public ResponseEntity<LoginResponse> refresh(
-            @RequestBody RefreshRequest request) {
+    public ResponseEntity<LoginResponse> refresh(@Valid @RequestBody RefreshRequest request) {
 
         return ResponseEntity.ok(authService.refreshToken(request));
     }

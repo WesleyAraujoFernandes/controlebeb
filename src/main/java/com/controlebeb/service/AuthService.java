@@ -3,6 +3,8 @@ package com.controlebeb.service;
 import com.controlebeb.domain.RefreshToken;
 import com.controlebeb.domain.Usuario;
 import com.controlebeb.dto.*;
+import com.controlebeb.exception.ResourceNotFoundException;
+import com.controlebeb.exception.UnauthorizedException;
 import com.controlebeb.repository.RefreshTokenRepository;
 import com.controlebeb.repository.UsuarioRepository;
 import com.controlebeb.security.*;
@@ -103,6 +105,24 @@ public class AuthService {
         refreshTokenRepository.save(newEntity);
 
         return new LoginResponse(newAccessToken, newRefreshToken);
+    }
+
+    @Transactional
+    public void logout(String refreshToken) {
+
+        // 1️⃣ validar assinatura
+        if (!jwtService.isTokenValid(refreshToken)) {
+            throw new UnauthorizedException("Refresh token inválido");
+        }
+
+        // 2️⃣ buscar no banco
+        RefreshToken storedToken = refreshTokenRepository
+                .findByToken(refreshToken)
+                .orElseThrow(() -> new ResourceNotFoundException("Refresh token não encontrado"));
+
+        // 3️⃣ remover (revogação)
+        if (storedToken != null)
+            refreshTokenRepository.delete(storedToken);
     }
 
 }

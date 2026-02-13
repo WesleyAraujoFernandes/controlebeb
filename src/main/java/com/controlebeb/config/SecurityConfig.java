@@ -1,5 +1,7 @@
 package com.controlebeb.config;
 
+import com.controlebeb.security.CustomAccessDeniedHandler;
+import com.controlebeb.security.CustomAuthenticationEntryPoint;
 import com.controlebeb.security.JwtAuthenticationFilter;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,6 +27,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtFilter;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -35,10 +39,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/auth/refresh").permitAll()
+                        .requestMatchers("/auth/logout").permitAll()
                         .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint((request, response, authException) -> response
-                                .sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized")))
+                        .accessDeniedHandler(customAccessDeniedHandler)
+                        .authenticationEntryPoint(customAuthenticationEntryPoint))
                 .addFilterBefore(jwtFilter,
                         UsernamePasswordAuthenticationFilter.class);
 
