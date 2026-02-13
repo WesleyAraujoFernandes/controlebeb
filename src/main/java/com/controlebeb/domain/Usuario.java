@@ -2,6 +2,8 @@ package com.controlebeb.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -23,8 +25,9 @@ public class Usuario extends BaseEntity {
     private String email;
     @Column(nullable = false)
     private String senha;
-    @Column(nullable = false, length = 50)
-    private String role;
     @Column(nullable = false)
     private Boolean ativo;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 }
